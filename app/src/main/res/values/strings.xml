@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Conference</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_schedule">Schedule</string>
+    <string name="label_liked_talks">Liked Talks</string>
+    <string name="label_rooms">Rooms</string>
+</resources>

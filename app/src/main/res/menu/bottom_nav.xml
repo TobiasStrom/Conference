@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/scheduleFragment"
+        android:icon="@drawable/ic_baseline_event_note_24"
+        android:title="Schedule" />
+    <item
+        android:id="@+id/likedTalksFragment"
+        android:icon="@drawable/ic_baseline_favorite_24"
+        android:title="Liked Talks" />
+    <item
+        android:id="@+id/roomsFragment"
+        android:icon="@drawable/ic_baseline_meeting_room_24"
+        android:title="Rooms" />
+</menu>
