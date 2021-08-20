@@ -39,7 +39,7 @@ class ScheduleFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = ScheduleFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
@@ -68,14 +68,12 @@ class ScheduleFragment : Fragment() {
         binding.progress.visible()
         networkStatusChecker.performIfConnectedToInternet {
             remoteApi.getTasks {talks, error ->
-                    if (talks.isNotEmpty()) {
-                        onTalksReceived(talks)
-                        Log.d("Talks", "getAllTask $talks")
-                    } else if (error != null) {
-                        onGetTalksFailed()
-                        Log.d("Talks", "It failed")
-                    }
-
+                if (talks.isNotEmpty()) {
+                    onTalksReceived(talks)
+                } else if (error != null) {
+                    onGetTalksFailed()
+                    Log.d("Talks", "It failed")
+                }
             }
         }
     }
@@ -93,5 +91,4 @@ class ScheduleFragment : Fragment() {
     private fun onGetTalksFailed(){
         activity?.toast("Failed to fetch talks!")
     }
-
 }

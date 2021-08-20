@@ -14,7 +14,7 @@ class Interceptor: Interceptor {
         Log.d("Talks" , "Status code ${response.code}")
 
         //Comment out to run
-         //response.body?.string()?.let { Log.d("Talks", "Body: $it") }
+        //response.body?.string()?.let { Log.d("Talks", "Body: $it") }
 
         return response
     }

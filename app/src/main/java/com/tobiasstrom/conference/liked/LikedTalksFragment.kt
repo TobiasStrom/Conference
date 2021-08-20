@@ -38,7 +38,7 @@ class LikedTalksFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentLikedTalksBinding.inflate(inflater, container, false)
         val view = binding.root
@@ -64,6 +64,7 @@ class LikedTalksFragment : Fragment() {
     }
 
     private fun getLikedTalks(){
+        /*
         networkStatusChecker.performIfConnectedToInternet {
             remoteApi.getTasks {talks, error ->
                 if (talks.isNotEmpty()) {
@@ -76,6 +77,8 @@ class LikedTalksFragment : Fragment() {
 
             }
         }
+
+         */
     }
 
     private fun onTalksReceived(talks: List<Talk>) = adapter.setData(talks)

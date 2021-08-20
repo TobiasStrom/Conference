@@ -42,5 +42,9 @@ class ScheduleAdapter : RecyclerView.Adapter<ScheduleAdapter.ViewHolder>() {
     fun setData(data: List<Talk>){
         this.data.clear()
         this.data.addAll(data)
+        this.data.forEach {
+            Log.d("Talks", "setData: ${it.title}")
+        }
+
     }
 }

@@ -4,6 +4,8 @@ import android.app.Application
 import com.tobiasstrom.conference.database.ConferenceDatabase
 import com.tobiasstrom.conference.networking.RemoteApi
 import com.tobiasstrom.conference.networking.buildApiService
+import com.tobiasstrom.conference.repository.ConferenceRepository
+import com.tobiasstrom.conference.repository.ConferenceRepositoryImpl
 
 class App: Application() {
     companion object{
@@ -18,6 +20,11 @@ class App: Application() {
 
         private val database: ConferenceDatabase by lazy {
             ConferenceDatabase.buildDatabase(instance)
+        }
+        val repository: ConferenceRepository by lazy {
+            ConferenceRepositoryImpl(
+                database.talkDao()
+            )
         }
 
     }
