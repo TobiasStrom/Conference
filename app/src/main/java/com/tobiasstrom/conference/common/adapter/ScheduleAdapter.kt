@@ -45,6 +45,6 @@ class ScheduleAdapter : RecyclerView.Adapter<ScheduleAdapter.ViewHolder>() {
         this.data.forEach {
             Log.d("Talks", "setData: ${it.title}")
         }
-
+        notifyDataSetChanged()
     }
 }
