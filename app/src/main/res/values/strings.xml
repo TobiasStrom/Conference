@@ -5,4 +5,5 @@
     <string name="label_schedule">Schedule</string>
     <string name="label_liked_talks">Liked Talks</string>
     <string name="label_rooms">Rooms</string>
+    <string name="likes">Likes: %d</string>
 </resources>

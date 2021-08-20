@@ -9,7 +9,11 @@
         android:id="@+id/scheduleFragment"
         android:name="com.tobiasstrom.conference.schedule.ScheduleFragment"
         android:label="schedule_fragment"
-        tools:layout="@layout/schedule_fragment" />
+        tools:layout="@layout/schedule_fragment" >
+        <action
+            android:id="@+id/actionTalk"
+            app:destination="@id/talkFragment" />
+    </fragment>
     <fragment
         android:id="@+id/likedTalksFragment"
         android:name="com.tobiasstrom.conference.liked.LikedTalksFragment"
@@ -20,4 +24,14 @@
         android:name="com.tobiasstrom.conference.rooms.RoomsFragment"
         android:label="fragment_rooms"
         tools:layout="@layout/fragment_rooms" />
+    <fragment
+        android:id="@+id/talkFragment"
+        android:name="com.tobiasstrom.conference.schedule.talk.TalkFragment"
+        android:label="fragment_talk"
+        tools:layout="@layout/fragment_talk" >
+        <argument
+            android:name="id"
+            app:argType="string"
+            android:defaultValue="1" />
+    </fragment>
 </navigation>
