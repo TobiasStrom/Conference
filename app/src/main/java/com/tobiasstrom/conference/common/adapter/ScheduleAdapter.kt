@@ -31,6 +31,7 @@ class ScheduleAdapter : RecyclerView.Adapter<ScheduleAdapter.ViewHolder>() {
                 binding.talkTimeTextView.text = this.getDateFromUnix().toString()
                 binding.root.setOnClickListener {
                     val action = ScheduleFragmentDirections.actionTalk()
+                    action.setId(this.id)
                     it.findNavController().navigate(action)
                 }
             }
