@@ -25,7 +25,6 @@ class ScheduleAdapter : RecyclerView.Adapter<ScheduleAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder){
             with(data[position]){
-                Log.d("Talks", "onBindViewHolder ${this.title}")
                 binding.talkNameTextView.text = this.title
                 binding.talkRoomTextView.text = this.room
                 binding.talkTimeTextView.text = this.getDateFromUnix().toString()
@@ -43,9 +42,6 @@ class ScheduleAdapter : RecyclerView.Adapter<ScheduleAdapter.ViewHolder>() {
     fun setData(data: List<Talk>){
         this.data.clear()
         this.data.addAll(data)
-        this.data.forEach {
-            Log.d("Talks", "setData: ${it.title}")
-        }
         notifyDataSetChanged()
     }
 }

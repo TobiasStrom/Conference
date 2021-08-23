@@ -1,5 +1,11 @@
 package com.tobiasstrom.conference.repository
 
-interface ConferenceRepository{
+import com.tobiasstrom.conference.database.entity.TalkEntity
 
+interface ConferenceRepository{
+    fun addFavorite(talkEntity: TalkEntity)
+
+    fun getFavorite(talkId: String): TalkEntity?
+
+    fun getFavorites(): List<TalkEntity>
 }

@@ -8,7 +8,7 @@ import com.tobiasstrom.conference.database.dao.TalkDao
 import com.tobiasstrom.conference.database.entity.TalkEntity
 import com.tobiasstrom.conference.model.Talk
 
-const val DATABASE_VERSION = 2
+const val DATABASE_VERSION = 1
 
 @Database(
     entities = [TalkEntity::class],

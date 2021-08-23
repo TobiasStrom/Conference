@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.tobiasstrom.conference.App
 import com.tobiasstrom.conference.R
+import com.tobiasstrom.conference.database.entity.TalkEntity
 import com.tobiasstrom.conference.databinding.FragmentTalkBinding
 import com.tobiasstrom.conference.model.Speaker
 
@@ -24,6 +25,7 @@ class TalkFragment : Fragment() {
     private val networkStatusChecker by lazy {
         NetworkStatusChecker(activity?.getSystemService(ConnectivityManager::class.java))
     }
+    private val repository by lazy {  App.repository }
 
     private var talkId: String? = null
     private lateinit var talk: Talk
@@ -101,6 +103,12 @@ class TalkFragment : Fragment() {
         binding.progress.invisible()
         binding.likeButtonImageButton.visible()
 
+        repository.addFavorite(TalkEntity("c9bcc8c0-9dd1-5e7c-ac90-824c397b161f", false))
+
+    }
+
+    private fun getFavorites(): List<Talk>{
+        return emptyList()
     }
 
     private fun onGetTalkFailed(){
@@ -113,23 +121,31 @@ class TalkFragment : Fragment() {
     }
 
     private fun setupFavoriteButtonImage(talk: Talk){
-        if(talk.isFavorite){
-            binding.likeButtonImageButton.setImageDrawable(activity?.getDrawable(R.drawable.ic_baseline_favorite_24))
-        }else{
-            binding.likeButtonImageButton.setImageDrawable(activity?.getDrawable(R.drawable.ic_baseline_favorite_border_24))
+        repository.getFavorite(talk.id).let {
+            if(it?.isFavorite == true){
+                talk.isFavorite = true
+                binding.likeButtonImageButton.setImageDrawable(activity?.getDrawable(R.drawable.ic_baseline_favorite_24))
+            }else{
+                binding.likeButtonImageButton.setImageDrawable(activity?.getDrawable(R.drawable.ic_baseline_favorite_border_24))
+            }
         }
+
     }
 
-    private fun setupFavoriteButtonClickListener(talk: Talk){
-        binding.likeButtonImageButton.setOnClickListener{ _ ->
-            if (talk.isFavorite){
+    private fun setupFavoriteButtonClickListener(talk: Talk) {
+        binding.likeButtonImageButton.setOnClickListener { _ ->
+            if (talk.isFavorite) {
+                repository.addFavorite(TalkEntity(talk.id, false))
                 binding.likeButtonImageButton.setImageDrawable(activity?.getDrawable(R.drawable.ic_baseline_favorite_border_24))
                 this.talk.isFavorite = false
-            }else{
+            } else {
+                remoteApi.likeTalk(talk.id)
+                talk.likes++
+                binding.likesTextView.text = getString(R.string.likes, talk.likes)
+                repository.addFavorite(TalkEntity(talk.id, true))
                 binding.likeButtonImageButton.setImageDrawable(activity?.getDrawable(R.drawable.ic_baseline_favorite_24))
                 this.talk.isFavorite = true
             }
-
         }
     }
 

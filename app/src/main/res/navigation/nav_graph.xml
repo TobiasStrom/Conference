@@ -18,7 +18,11 @@
         android:id="@+id/likedTalksFragment"
         android:name="com.tobiasstrom.conference.liked.LikedTalksFragment"
         android:label="fragment_liked_talks"
-        tools:layout="@layout/fragment_liked_talks" />
+        tools:layout="@layout/fragment_liked_talks" >
+        <action
+            android:id="@+id/actionTalk"
+            app:destination="@id/talkFragment" />
+    </fragment>
     <fragment
         android:id="@+id/roomsFragment"
         android:name="com.tobiasstrom.conference.rooms.RoomsFragment"

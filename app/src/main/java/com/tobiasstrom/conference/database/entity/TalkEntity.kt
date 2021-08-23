@@ -1,12 +1,15 @@
 package com.tobiasstrom.conference.database.entity
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
-@Entity
+@Parcelize
+@Entity(tableName = "talk_table")
 data class TalkEntity(
     @PrimaryKey
-    val id: String,
+    @ColumnInfo(name = "id") val id: String,
     @ColumnInfo(name = "is_favorite") var isFavorite: Boolean
-)
+): Parcelable

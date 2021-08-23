@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tobiasstrom.conference.App
 import com.tobiasstrom.conference.R
 import com.tobiasstrom.conference.common.adapter.ScheduleAdapter
+import com.tobiasstrom.conference.database.entity.TalkEntity
 import com.tobiasstrom.conference.databinding.FragmentLikedTalksBinding
 import com.tobiasstrom.conference.databinding.ScheduleFragmentBinding
 import com.tobiasstrom.conference.model.Talk
@@ -19,6 +20,7 @@ import com.tobiasstrom.conference.networking.NetworkStatusChecker
 import com.tobiasstrom.conference.schedule.ScheduleFragment
 import com.tobiasstrom.conference.schedule.ScheduleViewModel
 import com.tobiasstrom.conference.utils.toast
+import kotlin.time.measureTime
 
 class LikedTalksFragment : Fragment() {
 
@@ -27,6 +29,7 @@ class LikedTalksFragment : Fragment() {
     private val networkStatusChecker by lazy {
         NetworkStatusChecker(activity?.getSystemService(ConnectivityManager::class.java))
     }
+    private val repository by lazy {  App.repository }
 
     companion object {
         fun newInstance() = ScheduleFragment()
@@ -52,7 +55,6 @@ class LikedTalksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.likedTaskRecyclerView.layoutManager = LinearLayoutManager(activity)
         binding.likedTaskRecyclerView.adapter = adapter
         initUi()
@@ -64,24 +66,28 @@ class LikedTalksFragment : Fragment() {
     }
 
     private fun getLikedTalks(){
-        /*
         networkStatusChecker.performIfConnectedToInternet {
             remoteApi.getTasks {talks, error ->
                 if (talks.isNotEmpty()) {
-                    onTalksReceived(talks.filter { it.isFavorite == true })
-                    Log.d("Talks", talks.toString())
+                    onTalksReceived(talks)
                 } else if (error != null) {
                     onGetTalksFailed()
                     Log.d("Talks", "It failed")
                 }
-
             }
         }
-
-         */
     }
 
-    private fun onTalksReceived(talks: List<Talk>) = adapter.setData(talks)
+    private fun onTalksReceived(talks: List<Talk>) {
+        val favoriteTask= mutableListOf<Talk>()
+        val favorite = repository.getFavorites()
+        talks.forEach {
+            if(favorite.contains(TalkEntity(it.id, true))){
+                favoriteTask.add(it)
+            }
+        }
+        adapter.setData(favoriteTask)
+    }
 
     private fun onGetTalksFailed(){
         activity?.toast("Failed to fetch talks!")

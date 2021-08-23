@@ -1,6 +1,7 @@
 package com.tobiasstrom.conference.networking
 
 import com.google.gson.Gson
+import com.tobiasstrom.conference.model.LikeResponse
 import com.tobiasstrom.conference.model.Speaker
 import com.tobiasstrom.conference.model.Talk
 import okhttp3.ResponseBody
@@ -53,7 +54,7 @@ class RemoteApi(private val apiService: RemoteApiService) {
 
                 val data = gson.fromJson(jsonBody, Array<Talk>::class.java).toList()
 
-                if (data != null && data.isNotEmpty()) {
+                if (data.isNotEmpty()) {
                     onTasksReceived(data, null)
                 } else {
                     onTasksReceived(emptyList(), NullPointerException("No data available!"))
@@ -84,6 +85,20 @@ class RemoteApi(private val apiService: RemoteApiService) {
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 onSpeakerReceived(null, t)
+            }
+        })
+    }
+
+    fun likeTalk(talkId: String){
+        apiService.likeTalk(talkId).enqueue(object : Callback<ResponseBody>{
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) : Unit {
+               val jsonBody = response.body()?.string()
+
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable): Unit {
+
             }
         })
     }

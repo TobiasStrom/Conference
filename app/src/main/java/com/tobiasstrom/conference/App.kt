@@ -1,6 +1,7 @@
 package com.tobiasstrom.conference
 
 import android.app.Application
+import android.util.Log
 import com.tobiasstrom.conference.database.ConferenceDatabase
 import com.tobiasstrom.conference.networking.RemoteApi
 import com.tobiasstrom.conference.networking.buildApiService
@@ -31,6 +32,7 @@ class App: Application() {
 
     override fun onCreate() {
         super.onCreate()
+        Log.d("Talks2", "Initealt instance")
         instance = this
     }
 }

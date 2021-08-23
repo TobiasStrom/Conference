@@ -14,7 +14,7 @@ class Talk(
     @field:Json(name = "speakers") val speakers: List<String>?,
     @field:Json(name = "time") val time: Long,
     @field:Json(name = "id") val id: String,
-    @field:Json(name = "likes") val likes: Int,
+    @field:Json(name = "likes") var likes: Int,
     @field:Json(name = "description") val description: String?,
     @field:Json(name = "topic") val topic: String?,
     @field:Json(name = "isFavorite") var isFavorite: Boolean = false

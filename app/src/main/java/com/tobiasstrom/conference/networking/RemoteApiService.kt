@@ -17,4 +17,5 @@ interface RemoteApiService {
 
     @GET("speaker/{id}")
     fun getSpeaker(@Path("id") speakerId: String): Call<ResponseBody>
+
 }
