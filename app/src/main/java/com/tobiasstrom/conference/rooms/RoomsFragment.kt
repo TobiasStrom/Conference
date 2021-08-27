@@ -53,5 +53,4 @@ class RoomsFragment : Fragment() {
         binding.roomRecyclerView.adapter = adapter
 
     }
-
 }

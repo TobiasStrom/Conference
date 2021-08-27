@@ -29,7 +29,7 @@ class TalkFragment : Fragment() {
 
     private var talkId: String? = null
     private lateinit var talk: Talk
-    private var speakers: MutableList<Speaker>? = mutableListOf()
+    private lateinit var speakers: List<Speaker>
 
     companion object {
         fun newInstance() = TalkFragment()
@@ -65,8 +65,9 @@ class TalkFragment : Fragment() {
             remoteApi.getTalk(talkId){talk, error ->
                 if(talk != null){
                     this.talk = talk
+                    Log.d("Speaker", "Lengde på talk from this ${talk.speakers?.size}")
                     getSpeakers(talk.speakers)
-                    onBuildView()
+
 
                 }else if (error!= null){
                     onGetTalkFailed()
@@ -77,15 +78,25 @@ class TalkFragment : Fragment() {
 
 
     private fun getSpeakers(speakers: List<String>?) {
+        var list: MutableList<Speaker> = mutableListOf()
         networkStatusChecker.performIfConnectedToInternet {
             speakers?.forEach {
                 remoteApi.getSpeaker(it){speaker, throwable ->
                     if (speaker != null){
-                        this.speakers?.add(speaker)
-                        Log.d("Speaker", "Lengde på liste ${speakers.size}")
+                        list.add(speaker)
+                        Log.d("Speaker", "Kjør på ${speaker.name}")
+
                     }
                 }
+                Log.d("Speaker", "Kjør på")
             }
+            Log.d("Speaker", "Lengde på speaker liste før ${speakers?.size}")
+            Log.d("Speaker", "Lengde på list liste før ${list.size}")
+
+            this.speakers = list
+            Log.d("Speaker", "Lengde på list liste ${list.size}")
+            Log.d("Speaker", "Lengde på this.speaker liste ${this.speakers.size}")
+            onBuildView()
 
         }
 
@@ -99,7 +110,12 @@ class TalkFragment : Fragment() {
         binding.roomTextView.text = talk.room
         binding.timeTextView.text = talk.getDateFromUnix().toString()
         binding.likesTextView.text = getString(R.string.likes, talk.likes)
-        Log.d("Speaker", "Lengde på liste ${this.speakers?.size}")
+        if(this.speakers.isNotEmpty()){
+            Log.d("Speakerw", "Lengde på liste ${this.speakers.get(0).name}")
+        }else{
+            Log.d("Speakerw", "Listen er tom")
+        }
+
         binding.progress.invisible()
         binding.likeButtonImageButton.visible()
 
